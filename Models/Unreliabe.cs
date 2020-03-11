@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace TestTask1
 {
+    
     class Unreliabe : Asset
     {
         public override string Name { get; set; }
 
+        /// <summary>
+        /// Может стоило сделать readonly?
+        /// </summary>
         public override string Value
         {
             get =>
