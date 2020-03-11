@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="TestTask1.Views.AddView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TestTask1.Views"
+             xmlns:VM="clr-namespace:TestTask1.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance VM:MainViewModel }">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <ComboBox Grid.Row="0" Grid.Column="0" SelectedIndex="{Binding AssetType}" Name="AssetTypeCb">
+            <ComboBoxItem>Денежные средства</ComboBoxItem>
+            <ComboBoxItem>Недвижимость</ComboBoxItem>
+            <ComboBoxItem>Другое</ComboBoxItem>
+        </ComboBox>
+        <ContentControl Grid.Row="1" Content="{Binding MainViewModel}">
+            <ContentControl.Resources>
+                <ControlTemplate x:Key="Template1" TargetType="{x:Type ContentControl}">
+                    <local:EditMoneyView DataContext="{TemplateBinding DataContext}"/>
+                </ControlTemplate>
+                <ControlTemplate x:Key="Template2" TargetType="{x:Type ContentControl}">
+                    <local:EditBuildingView DataContext="{TemplateBinding DataContext}"/>
+                </ControlTemplate>
+            </ContentControl.Resources>
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Setter Property="Template" Value="{DynamicResource Template1}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedIndex, ElementName=AssetTypeCb}" Value="1">
+                            <Setter Property="Template" Value="{DynamicResource Template2}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+        <DockPanel Grid.Row="2" HorizontalAlignment="Center">
+            <Button Content="ADD" Width="50" Command="{Binding AddAssetCommand}" />
+            <Button Content="Cancel" Width="50" Command="{Binding CancelCommand}" />
+        </DockPanel>
+    </Grid>
+</UserControl>
