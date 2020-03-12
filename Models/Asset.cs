@@ -12,7 +12,13 @@ namespace TestTask1
     {
         public virtual string Name { get; set; }
         public virtual string Value { get; set; }
+        /// <summary>
+        /// Для чего наименование банка в базовом классе? 
+        /// </summary>
         public string BankName { get; set; }
+        /// <summary>
+        /// Не очень ясно для чего предполагалось использовать?
+        /// </summary>
         public virtual bool IsSaved { get; set; }
     }
 }

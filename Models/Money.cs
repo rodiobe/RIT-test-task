@@ -10,6 +10,9 @@ namespace TestTask1
     {
         public override string Name { get; set; }
 
+        /// <summary>
+        /// Может стоило сделать readonly? 
+        /// </summary>
         public override string Value
         {
             get => $"{Mount} {Currency}";

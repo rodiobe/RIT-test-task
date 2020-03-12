@@ -13,12 +13,24 @@ namespace TestTask1.ViewModels
     class MainViewModel : BindableBase
     {
         private ObservableCollection<Asset> _assets;
+        /// <summary>
+        /// Для чего планировалось использовать?
+        /// </summary>
         private int _selectedTab;
+        /// <summary>
+        /// Для чего планировалось использовать?
+        /// </summary>
         private int _assetType;
+        // Q: не ясна логика объявления этих объектов тут. Логиченее было бы их объявлять, создавать и инициализировать при редактировании?
         private Money _editingMoney;
         private Building _editingBuilding;
         private Asset _editingOther;
+        // End Q
+
         private int _selectedAssetIndex;
+        /// <summary>
+        /// Не используется?
+        /// </summary>
         public DelegateCommand AddCommand { get; set; }
         public DelegateCommand EditCommand { get; set; }
         public DelegateCommand DeleteCommand { get; set; }
@@ -65,7 +77,9 @@ namespace TestTask1.ViewModels
 
 
         public DelegateCommand AddAssetCommand { get; set; }
-
+        /// <summary>
+        /// Не используется?
+        /// </summary>
         public DelegateCommand CancelCommand { get; set; }
 
         public int AssetType
@@ -78,6 +92,9 @@ namespace TestTask1.ViewModels
             }
         }
 
+        /// <summary>
+        /// Не используется?
+        /// </summary>
         public int SelectedTab
         {
             get => _selectedTab;
@@ -113,7 +130,7 @@ namespace TestTask1.ViewModels
                 new Money("счет 5") {Mount = 5, Currency = "Dollar", BankName = "EuroBank"}
             };
 
-
+            //Q: не ясна логика, ничего не редактируется, но уже инициализировано какими то значениями
             EditingMoney = new Money("money");
             EditingBuilding = new Building("ул Пушкина дом Колотушкина");
             EditingOther = new Asset();
@@ -140,6 +157,7 @@ namespace TestTask1.ViewModels
                         Assets.Add(money);
                         break;
                     case AssetTypes.Buildings:
+                        // Q: тут возможно нужно было использовать Building?
                         var building = new Unreliabe(EditingBuilding.Name)
                         {
                             IsSaved = true,
@@ -170,8 +188,8 @@ namespace TestTask1.ViewModels
             EditCommand = new DelegateCommand(() =>
             {
                 var selectedIndex = SelectedAssetIndex;
-                var asset = Assets.ElementAt(selectedIndex);
-                Assets.Remove(asset);
+                var asset = Assets.ElementAt(selectedIndex); //bug: если два раза нажать "редактировать" падает ошибка
+                Assets.Remove(asset); // для чего удалять из списка?
 
                 switch (asset)
                 {
@@ -194,7 +212,7 @@ namespace TestTask1.ViewModels
                 }
 
                 RaisePropertyChanged("Assets");
-                Assets = Assets;
+                Assets = Assets; // Q: Не ясно для чего..?
             });
         }
     }
